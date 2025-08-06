@@ -1,0 +1,72 @@
+public class Solution
+{
+    private Dictionary<(int, int), List<(int, int)>> graph = new Dictionary<(int, int), List<(int, int)>>();
+    private List<(int, int)> visitor = new List<(int, int)>();
+    private int count = 0;
+
+    public void GroupGraph(int[][] grid)
+    {
+        var rows = grid.Length;
+        var cols = grid[0].Length;
+        var directions = new (int, int)[]
+        {
+            (-1, 0), (0, -1), (1, 0), (0, 1)
+        };
+        for (var row = 0; row < grid.Length; row++)
+        {
+            for (var column = 0; column < grid[0].Length; column++)
+            {
+                if (grid[row][column] == 1)
+                {
+                    var node = (row, column);
+                    graph[node] = new List<(int, int)>();
+
+                    foreach (var direction in directions)
+                    {
+                        var newRow = row + direction.Item1;
+                        var newColumn = column + direction.Item2;
+
+                        if (newRow >= 0 && newColumn >= 0 && newRow < rows && newColumn < cols &&
+                            grid[newRow][newColumn] == 1)
+                        {
+                            graph[node].Add((newRow, newColumn));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    public void DFS((int, int) node)
+    {
+        count++;
+        visitor.Add((node));
+        foreach (var item in graph[node])
+        {
+            if (!visitor.Contains((item)))
+            {
+                DFS(item);
+            }
+        }
+    }
+
+    public int MaxAreaOfIsland(int[][] grid)
+    {
+        GroupGraph(grid);
+
+        var result = 0;
+
+        foreach (var graphKey in graph.Keys)
+        {
+            if (!visitor.Contains(graphKey))
+            {
+                DFS(graphKey);
+            }
+            result = Math.Max(result, count);
+            count = 0;
+        }
+
+        return result;
+    }
+}
