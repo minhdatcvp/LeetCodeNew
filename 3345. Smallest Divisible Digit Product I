@@ -1,0 +1,20 @@
+public class Solution {
+    public int SmallestNumber(int n, int t) {
+       while (true)
+        {
+            int[] digits = n.ToString().Select(c => int.Parse(c.ToString())).ToArray();
+            var temp = 1;
+            foreach (var item in digits)
+            {
+                temp *= item;
+            }
+
+            if (temp % t == 0)
+            {
+                return n;
+            }
+
+            n++;
+        }
+    }
+}
