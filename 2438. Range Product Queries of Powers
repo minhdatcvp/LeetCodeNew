@@ -1,0 +1,31 @@
+public int[] ProductQueries(int n, int[][] queries) {
+        var p = new List<long>();
+        var result = new List<int>();
+        var mod = Math.Pow(10, 9) + 7;
+        var index = 0;
+        // get power
+        while (n > 0)
+        {
+            var m = n % 2;
+            n /= 2;
+
+            if (m != 0)
+            {
+                p.Add((int)Math.Pow(2, index));
+            }
+            index++;
+        }
+
+        foreach (var item in queries)
+        {
+            long resultItem = 1;
+            for (int i = item[0]; i <= item[1]; i++)
+            {
+                resultItem = (int)((resultItem * p[i])%mod);
+            }
+
+            result.Add((int)resultItem);
+        }
+
+        return result.ToArray();
+    }
