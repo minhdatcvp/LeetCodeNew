@@ -1,0 +1,7 @@
+int CanBeTypedWords(string text, string brokenLetters)
+{
+    var words = text.Split(' ').ToList();
+    return words.Count(s => !brokenLetters.ToLower().Any(x => s.ToLower().Contains(x)));
+}
+
+Console.WriteLine(CanBeTypedWords("leet code", "e"));
