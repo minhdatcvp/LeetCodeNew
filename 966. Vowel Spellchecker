@@ -1,0 +1,75 @@
+var wordlist = new string[] { "KiTe", "kite", "hare", "Hare" };
+var queries = new string[] { "kite", "Kite", "KiTe", "Hare", "HARE", "Hear", "hear", "keti", "keet", "keto" };
+
+string[] Spellchecker(string[] wordlist, string[] queries)
+{
+    var spellchecker = new string[queries.Length];
+    Dictionary<string, string> caseInsensitive = new Dictionary<string, string>();
+    Dictionary<string, string> vowelInsensitive = new Dictionary<string, string>();
+
+    foreach (var word in wordlist)
+    {
+        var wordLower = word.ToLower();
+        if (!caseInsensitive.ContainsKey(wordLower))
+        {
+            caseInsensitive.Add(wordLower, word);
+        }
+
+        var devowel = Deveowel(wordLower);
+        if (!vowelInsensitive.ContainsKey(devowel))
+        {
+            vowelInsensitive.Add(devowel, word);
+        }
+    }
+
+    for (int i = 0; i < queries.Length; i++)
+    {
+        var word = "";
+        var query = queries[i];
+        if (wordlist.Contains(query))
+        {
+            word = query;
+        }
+        else
+        {
+            if (caseInsensitive.ContainsKey(query.ToLower()))
+            {
+                word = caseInsensitive[query.ToLower()];
+            }
+            else
+            {
+                var devowel = Deveowel(query.ToLower());
+                if (vowelInsensitive.ContainsKey(devowel))
+                {
+                    word = vowelInsensitive[devowel];
+                }
+            }
+        }
+
+        spellchecker[i] = word;
+    }
+
+    return spellchecker;
+}
+
+string Deveowel(string word)
+{
+    var result = word.ToCharArray();
+    var spell = new Char[] { 'a', 'e', 'u', 'i', 'o' };
+
+    for (int i = 0; i < word.Length; i++)
+    {
+        if (spell.Contains(word[i]))
+        {
+            result[i] = '*';
+        }
+    }
+
+    return new string(result);
+}
+
+var test = Spellchecker(wordlist, queries);
+for (int i = 0; i < test.Length; i++)
+{
+    Console.WriteLine(test[i]);
+}
