@@ -1,0 +1,12 @@
+int TotalCandles(int n, int leftoversToNewCandle)
+{
+    int total = n;
+    while (n >= leftoversToNewCandle)
+    {
+        int newCandles = n / leftoversToNewCandle;
+        int leftovers = n % leftoversToNewCandle;
+        total += newCandles;
+        n = newCandles + leftovers;
+    }
+    return total;
+}
