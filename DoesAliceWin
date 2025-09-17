@@ -1,0 +1,15 @@
+bool DoesAliceWin(string s)
+{
+    var count = 0;
+    foreach (char c in s.ToLower())
+    {
+        if ("aeuio".Contains(c))
+        {
+            count++;
+        }
+    }
+    
+    return count > 0;
+}
+
+Console.WriteLine(DoesAliceWin("leetcoder"));
