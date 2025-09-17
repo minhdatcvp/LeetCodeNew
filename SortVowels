@@ -1,0 +1,27 @@
+string SortVowels(string s)
+{
+    var text = s.ToCharArray();
+    var chars = new List<char>();
+    foreach (char c in s)
+    {
+        if ("aeuioAEUIO".Contains(c))
+        {
+            chars.Add(c);
+        }
+    }
+
+    chars.Sort();
+    var index = 0;
+    for (int i = 0; i < text.Length; i++)
+    {
+        if ("aeuioAEUIO".Contains(s[i]))
+        {
+            text[i] = chars[index];
+            index++;
+        }
+    }
+
+    return new string(text);
+}
+
+Console.WriteLine(SortVowels("lEetcOde"));
