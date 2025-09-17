@@ -1,0 +1,37 @@
+int MaxFreqSum(string s)
+{
+    Dictionary<string, int> dict = new Dictionary<string, int>();
+    var maxC = 0;
+    var maxV = 0;
+
+    foreach (char c in s.ToLower())
+    {
+        if (!dict.ContainsKey(c.ToString()))
+        {
+            dict[c.ToString()] = 1;
+        }
+        else
+        {
+            dict[c.ToString()]++;
+        }
+
+        if ("aeuio".Contains(c))
+        {
+            if (dict[c.ToString()] > maxC)
+            {
+                maxC = dict[c.ToString()];
+            }
+        }
+        else
+        {
+            if (dict[c.ToString()] > maxV)
+            {
+                maxV = dict[c.ToString()];
+            }
+        }
+    }
+    
+    return maxC + maxV;
+}
+
+Console.WriteLine(MaxFreqSum("aeiaeia"));
