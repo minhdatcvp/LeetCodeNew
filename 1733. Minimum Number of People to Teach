@@ -1,0 +1,38 @@
+public class Solution {
+    public int MinimumTeachings(int n, int[][] languages, int[][] friendships) {
+         var needTeach = new HashSet<int>();
+
+    foreach (var f in friendships)
+    {
+        var f1 = f[0] - 1;
+        var f2 = f[1] - 1;
+
+        var l1 = new HashSet<int>(languages[f1]);
+        var l2 = new HashSet<int>(languages[f2]);
+
+        if (!l1.Overlaps(l2)) // không có ngôn ngữ chung
+        {
+            needTeach.Add(f1);
+            needTeach.Add(f2);
+        }
+    }
+
+    if (needTeach.Count == 0) return 0;
+
+    int result = int.MaxValue;
+
+    // thử từng ngôn ngữ
+    for (int lang = 1; lang <= n; lang++)
+    {
+        int known = 0;
+        foreach (var person in needTeach)
+        {
+            if (languages[person].Contains(lang))
+                known++;
+        }
+        result = Math.Min(result, needTeach.Count - known);
+    }
+
+    return result;
+    }
+}
