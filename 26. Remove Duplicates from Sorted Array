@@ -1,0 +1,13 @@
+int RemoveDuplicates(int[] nums)
+{
+    int index = 1;
+    foreach (int num in nums)
+    {
+        if (num != nums[index - 1])
+        {
+            nums[index++] = num;
+        }
+    }
+
+    return index;
+}
