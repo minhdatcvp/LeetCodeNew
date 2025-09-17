@@ -1,0 +1,16 @@
+void MoveZeroes(int[] nums)
+{
+    var indexZero = 0;
+    for (var index = 0; index < nums.Length; index++)
+    {
+        if (nums[index] != 0)
+        {
+            (nums[index], nums[indexZero]) = (nums[indexZero], nums[index]);
+            indexZero++;
+        }
+    }
+}
+
+var nums = new int[] { 0, 1, 0, 3, 12 };
+MoveZeroes(nums);
+Console.WriteLine(string.Join(", ", nums));
