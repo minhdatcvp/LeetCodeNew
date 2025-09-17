@@ -1,0 +1,75 @@
+
+string[] foods = new string[] { "kimchi", "miso", "sushi", "moussaka", "ramen", "bulgogi" };
+string[] cuisines = new string[] { "korean", "japanese", "japanese", "greek", "japanese", "korean" };
+int[] ratings = new int[] { 9, 12, 8, 15, 14, 7 };
+
+FoodRatings obj = new FoodRatings(foods, cuisines, ratings);
+Console.WriteLine(obj.HighestRated("korean"));
+Console.WriteLine(obj.HighestRated("japanese"));
+obj.ChangeRating("sushi", 16);
+Console.WriteLine(obj.HighestRated("japanese"));
+obj.ChangeRating("ramen", 16);
+Console.WriteLine(obj.HighestRated("japanese"));
+
+public class FoodRatings
+{
+    private readonly Dictionary<string, Food> foodMap = new();
+    private readonly Dictionary<string, SortedSet<Food>> cuisineMap = new();
+
+    public FoodRatings(string[] foods, string[] cuisines, int[] ratings)
+    {
+        for (int i = 0; i < foods.Length; i++)
+        {
+            var food = new Food(foods[i], cuisines[i], ratings[i]);
+
+            foodMap[foods[i]] = food;
+
+            if (!cuisineMap.ContainsKey(cuisines[i]))
+                cuisineMap[cuisines[i]] = new SortedSet<Food>(new FoodComparer());
+
+            cuisineMap[cuisines[i]].Add(food);
+        }
+    }
+
+    public void ChangeRating(string food, int newRating)
+    {
+        var f = foodMap[food];
+        var set = cuisineMap[f.Cuisine];
+
+        set.Remove(f); // remove old
+        f.Rating = newRating;
+        set.Add(f);    // add updated
+    }
+
+    public string HighestRated(string cuisine)
+    {
+        return cuisineMap[cuisine].First().Name;
+    }
+}
+
+public class Food
+{
+    public string Name { get; }
+    public string Cuisine { get; }
+    public int Rating { get; set; }
+
+    public Food(string name, string cuisine, int rating)
+    {
+        Name = name;
+        Cuisine = cuisine;
+        Rating = rating;
+    }
+}
+
+public class FoodComparer : IComparer<Food>
+{
+    public int Compare(Food x, Food y)
+    {
+        if (x.Rating != y.Rating)
+            return y.Rating.CompareTo(x.Rating); // Desc by rating
+        if (x.Name != y.Name)
+            return x.Name.CompareTo(y.Name);     // Asc by name
+        return 0;
+    }
+}
+
