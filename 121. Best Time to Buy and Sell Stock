@@ -1,0 +1,23 @@
+int MaxProfit(int[] prices)
+{
+    var maxProfit = 0;
+    var minPrice = prices[0];
+    foreach (var price in prices)
+    {
+        if (price < minPrice)
+        {
+            minPrice = price;
+        }
+        
+        var profit = price - minPrice;
+        if (profit > maxProfit)
+        {
+            maxProfit = profit;
+        }
+    }
+    
+    return maxProfit;
+}
+
+var prices = new int[] { 7, 1, 5, 3, 6, 4 };
+Console.WriteLine(MaxProfit(prices));
