@@ -1,0 +1,18 @@
+
+bool IsPalindrome(string s)
+{
+    var text = "";
+   // s = Regex.Replace(s, @"[^A-Za-z0-9]", "");
+   foreach (var c in s)
+   {
+       if (char.IsLetterOrDigit(c))
+       {
+           text += char.ToLower(c);
+       }
+   }
+   
+    
+    return text == new string(text.Reverse().ToArray());
+}
+
+Console.WriteLine(IsPalindrome("A man, a plan, a canal: Panama"));
