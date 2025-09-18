@@ -1,0 +1,8 @@
+int MissingNumber(int[] nums)
+{
+    var n = nums.Length;
+    var count = n * (n + 1) / 2;
+    return count - nums.Sum();
+}
+
+Console.WriteLine(MissingNumber(new int[] { 3,0,1}));
