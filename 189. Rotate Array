@@ -1,0 +1,27 @@
+void Rotate(int[] nums, int k)
+{
+    if (nums.Length <= k) k = k % nums.Length;
+    var temp = new int[k];
+    var l = nums.Length - k;
+
+    for (int i = l; i < nums.Length; i++)
+    {
+        temp[i - l] = nums[i];
+    }
+
+    for (int i = nums.Length - 1; i >= 0; i--)
+    {
+        if (i >= k)
+        {
+            nums[i] = nums[i - k];
+        }
+        else
+        {
+            nums[i] = temp[i];
+        }
+    }
+}
+
+var nums = new int[] { 1,2 };
+Rotate(nums, 7);
+Console.WriteLine(string.Join(",", nums));
