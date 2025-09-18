@@ -1,0 +1,46 @@
+int[] ProductExceptSelf(int[] nums)
+{
+    var mul = 1;
+    var zeroCOunt = 0;
+    foreach (var num in nums)
+    {
+        if (num != 0)
+        {
+            mul *= num;
+        }
+        else
+        {
+            zeroCOunt++;
+        }
+    }
+
+    for (var i = 0; i < nums.Length; i++)
+    {
+        if (nums[i] != 0)
+        {
+            if (zeroCOunt > 0)
+            {
+                nums[i] = 0;
+            }
+            else
+            {
+                nums[i] = mul / nums[i];
+            }
+        }
+        else
+        {
+            if (zeroCOunt == nums.Length || zeroCOunt > 1)
+            {
+                nums[i] = 0;
+            }
+            else
+            {
+                nums[i] = mul;
+            }
+        }
+    }
+
+    return nums;
+}
+
+Console.WriteLine(string.Join(" ", ProductExceptSelf(new int[] { 0,4, 0 })));
